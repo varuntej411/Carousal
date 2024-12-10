@@ -5,9 +5,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.corpus.carousal.LoginScreen
-import com.corpus.carousal.OTPVerificationScreen
-import com.corpus.carousal.viewmodel.OTPViewModel
+import com.corpus.carousal.presentation.uiscreens.LoginScreen
+import com.corpus.carousal.presentation.uiscreens.OTPVerificationScreen
+import com.corpus.carousal.data.viewmodel.OTPViewModel
 
 fun NavGraphBuilder.authenticationNavGraph(navController: NavHostController) {
     navigation(

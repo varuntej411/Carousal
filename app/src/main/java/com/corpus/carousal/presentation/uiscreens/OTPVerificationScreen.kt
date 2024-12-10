@@ -1,33 +1,39 @@
-package com.corpus.carousal
+package com.corpus.carousal.presentation.uiscreens
 
-import android.media.MediaRouter.RouteGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.corpus.carousal.data.viewmodel.OTPViewModel
 import com.corpus.carousal.navgraph.RootNavGraph
-import com.corpus.carousal.navgraph.Screens
-import com.corpus.carousal.viewmodel.OTPViewModel
 
 @Composable
 fun OTPVerificationScreen(
@@ -38,22 +44,37 @@ fun OTPVerificationScreen(
     val isVerified = viewModel.isVerified
     val errorMessage = viewModel.errorMessage
 
+    val focusRequesters = List(6) { FocusRequester() }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         // OTP Input Fields
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(
+            horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             for (i in 0 until 6) {
                 OTPInputField(
-                    modifier = Modifier.width(40.dp),
+                    modifier = Modifier
+                        .width(50.dp)
+                        .height(60.dp),
                     index = i,
                     value = otpCode.value.getOrNull(i)?.toString() ?: "",
-                    onValueChange = { newValue -> viewModel.onOtpValueChange(i, newValue) }
+                    onValueChange = { newValue ->
+                        viewModel.onOtpValueChange(i, newValue)
+                        if (newValue.isNotEmpty() && i < 5) {
+                            focusRequesters[i + 1].requestFocus() // Move to next field
+                        }
+                    },
+                    focusRequester = focusRequesters.get(i)
                 )
+
             }
         }
 
@@ -86,9 +107,10 @@ fun OTPInputField(
     modifier: Modifier = Modifier,
     index: Int,
     value: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    focusRequester: FocusRequester
 ) {
-    TextField(
+    OutlinedTextField(
         value = value,
         onValueChange = { newValue ->
             if (newValue.length <= 1 && newValue.all { it.isDigit() }) {
@@ -99,13 +121,11 @@ fun OTPInputField(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Next
         ),
-        keyboardActions = KeyboardActions(
-            onNext = { /* Handle next focus if necessary */ }
-        ),
-        modifier = modifier,
+        modifier = modifier.focusRequester(focusRequester),
         singleLine = true,
-        textStyle = MaterialTheme.typography.bodyLarge
+        textStyle = TextStyle(textAlign = TextAlign.Center, fontSize = 16.sp)
     )
+
 }
 
 @Preview

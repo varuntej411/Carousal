@@ -1,4 +1,4 @@
-package com.corpus.carousal
+package com.corpus.carousal.presentation.uiscreens
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +20,8 @@ import com.corpus.carousal.navgraph.BottomNavigationBar
 import com.corpus.carousal.navgraph.HomeNavGraph
 import com.corpus.carousal.navgraph.Screens
 import com.corpus.carousal.navgraph.bottomBarItems
+import com.corpus.carousal.presentation.components.CustomToolbar
+import okhttp3.Route
 
 @Composable
 fun MainHomeNavigationScreen(
@@ -54,9 +56,7 @@ fun MainHomeNavigationScreen(
         modifier = Modifier.fillMaxSize(),
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
-            CustomToolbar(onThemeClicked = {
-                darkTheme = !darkTheme
-            })
+            CustomToolbar()
         },
         bottomBar = {
             if (isBottomBarVisible) {

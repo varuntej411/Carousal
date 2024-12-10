@@ -1,4 +1,4 @@
-package com.corpus.carousal.viewmodel
+package com.corpus.carousal.data.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

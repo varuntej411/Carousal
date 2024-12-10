@@ -1,4 +1,4 @@
-package com.corpus.carousal
+package com.corpus.carousal.presentation.uiscreens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.corpus.carousal.R
 
 @Composable
 fun LoginScreen(navController: NavHostController, onLoginClicked: (String) -> Unit) {

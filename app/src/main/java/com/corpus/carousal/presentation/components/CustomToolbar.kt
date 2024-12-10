@@ -1,4 +1,4 @@
-package com.corpus.carousal
+package com.corpus.carousal.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,11 +38,9 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomToolbar(onThemeClicked: (Boolean) -> Unit) {
+fun CustomToolbar() {
     // val clickedNavDrawer = remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
-
-    var darkTheme by rememberSaveable { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -118,7 +116,5 @@ fun CustomToolbar(onThemeClicked: (Boolean) -> Unit) {
 @Preview
 @Composable
 fun CustomToolBarPreview() {
-    CustomToolbar {
-
-    }
+    CustomToolbar()
 }

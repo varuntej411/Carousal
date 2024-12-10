@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.corpus.carousal.MainHomeNavigationScreen
+import com.corpus.carousal.presentation.uiscreens.MainHomeNavigationScreen
 
 @Composable
 fun SetUpRootNavGraph(navController: NavHostController) {

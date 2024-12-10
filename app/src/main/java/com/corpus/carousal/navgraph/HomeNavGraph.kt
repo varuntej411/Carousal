@@ -5,7 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.corpus.carousal.HomeScreen
+import com.corpus.carousal.presentation.uiscreens.AboutScreen
+import com.corpus.carousal.presentation.uiscreens.HomeScreen
 
 @Composable
 fun HomeNavGraph(navController: NavHostController, innerPaddingValues: PaddingValues) {
@@ -19,7 +20,7 @@ fun HomeNavGraph(navController: NavHostController, innerPaddingValues: PaddingVa
         }
 
         composable(route = Screens.AboutScreen.route) {
-            HomeScreen(navController = navController, innerPaddingValues = innerPaddingValues)
+            AboutScreen(navController = navController, innerPaddingValues = innerPaddingValues)
         }
 
     }

@@ -1,4 +1,4 @@
-package com.corpus.carousal.viewmodel
+package com.corpus.carousal.data.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
