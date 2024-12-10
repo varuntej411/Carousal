@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    window.statusBarColor = application.getColor(R.color.teal_700)
+                    window.statusBarColor = application.getColor(R.color.black)
                     //  window.navigationBarColor = application.getColor(R.color.teal_700)
                     SetUpRootNavGraph(navController = navController)
                 }
