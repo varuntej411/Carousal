@@ -3,7 +3,6 @@ package com.corpus.carousal.domain
 import com.corpus.carousal.domain.model.CarousalResponse
 import com.corpus.carousal.domain.repository.HomeRepository
 import com.corpus.carousal.utils.APIDataStatus
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
