@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.corpus.carousal.navgraph.SetUpRootNavGraph
 import com.corpus.carousal.ui.theme.CarousalTheme
@@ -20,13 +22,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
       //  enableEdgeToEdge()
+        installSplashScreen()
         setContent {
             CarousalTheme {
                 val navController = rememberNavController()
                 Surface(
                     modifier = Modifier
                         .fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    contentColor = Color.Black,
+                    color = MaterialTheme.colorScheme.onSurface
                 ) {
                     window.statusBarColor = application.getColor(R.color.black)
                     //  window.navigationBarColor = application.getColor(R.color.teal_700)

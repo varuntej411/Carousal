@@ -1,5 +1,6 @@
 package com.corpus.carousal.presentation.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,19 +42,20 @@ import kotlinx.coroutines.launch
 @Composable
 fun CustomToolbar() {
     // val clickedNavDrawer = remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
+   // val coroutineScope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(elevation = 5.dp, shape = RectangleShape)
+            .background(color = MaterialTheme.colorScheme.onBackground)
+          //  .shadow(elevation = 5.dp, shape = RectangleShape)
     ) {
         TopAppBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
             colors = TopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.background,
+                containerColor = MaterialTheme.colorScheme.onBackground,
                 navigationIconContentColor = Color.Black,
                 titleContentColor = Color.Black,
                 actionIconContentColor = Color.Black,
@@ -62,40 +65,26 @@ fun CustomToolbar() {
                 Row(
                     Modifier
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Absolute.SpaceAround,
+                    horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "Welcome ${"VarunTej!"}",
-                        fontSize = 15.sp,
-                        fontFamily = FontFamily.Monospace,
-                        fontWeight = FontWeight.ExtraBold,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(5.dp),
-                        maxLines = 1,
-                        minLines = 1,
-                        softWrap = true
-                    )
 
                     IconButton(onClick = {
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.Notifications,
+                            imageVector = Icons.Rounded.Search,
                             contentDescription = "Notifications",
                             Modifier
                                 .fillMaxWidth()
-                                .padding(5.dp)
+                                .padding(5.dp),
+                            tint = Color.White
                         )
                     }
                 }
             },
             navigationIcon = {
                 IconButton(
-                    onClick = {
-                        coroutineScope.launch {
-
-                        }
-                    }
+                    onClick = {}
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Menu,
@@ -103,7 +92,8 @@ fun CustomToolbar() {
                         Modifier
                             .fillMaxWidth()
                             .fillMaxHeight()
-                            .padding(2.dp)
+                            .padding(2.dp),
+                        tint = Color.White
                     )
                 }
             }

@@ -28,8 +28,10 @@ datastore_preference = "1.1.1"
 pagingRuntime = "3.3.4"
 accompanistPermissions = "0.36.0"
 viewpagerVersion = "1.1.0"
+splash = "1.0.0"
 
 [libraries]
+androidx-splash-screen = {group = "androidx.core", name = "core-splashscreen", version.ref = "splash"}
 accompanist-permission = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanistPermissions" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

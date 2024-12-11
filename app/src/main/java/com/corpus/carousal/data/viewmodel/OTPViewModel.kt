@@ -2,9 +2,19 @@ package com.corpus.carousal.data.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.corpus.carousal.utils.UserDataStoreImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OTPViewModel : ViewModel() {
+@HiltViewModel
+class OTPViewModel @Inject constructor(private val dataStore: DataStore<Preferences>) : ViewModel() {
     private val _otpCode = mutableStateOf(List(6) { "" })
     val otpCode: State<List<String>> = _otpCode
 
@@ -13,6 +23,14 @@ class OTPViewModel : ViewModel() {
 
     private val _errorMessage = mutableStateOf("")
     val errorMessage: State<String> = _errorMessage
+
+    private val userPref = UserDataStoreImpl(dataStore)
+
+    fun saveUserLoggedIn(userLoggedIn: Boolean) {
+        viewModelScope.launch {
+            userPref.saveUserLoggedIn(userLoggedIn)
+        }
+    }
 
     fun onOtpValueChange(index: Int, newValue: String) {
         val updatedOtpCode = otpCode.value.toMutableList()

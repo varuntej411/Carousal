@@ -20,8 +20,13 @@ fun HomeNavGraph(navController: NavHostController, innerPaddingValues: PaddingVa
         }
 
         composable(route = Screens.AboutScreen.route) {
-            AboutScreen(navController = navController, innerPaddingValues = innerPaddingValues)
+            AboutScreen(navController = navController, innerPaddingValues = innerPaddingValues, onLogoutClicked = {
+                    navController.navigate(Screens.HomeScreen.route) {
+                    popUpTo(Screens.HomeScreen.route) {
+                        inclusive = true
+                    }
+                }
+            })
         }
-
     }
 }

@@ -2,4 +2,20 @@
 <resources>
 
     <style name="Theme.Carousal" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.MyApp.SplashScreen" parent="Theme.Carousal">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/profile</item>
+<!--        <item name="windowSplashScreenIconSize">20dp</item>-->
+        <item name="splashScreenIconSize">20dp</item>
+        <item name="android:text">Splash</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">@color/black</item>
+        <!-- Optional: Customize the duration of the splash screen -->
+<!--
+        <item name="android:splashScreenDuration">2000</item>
+-->
+        <item name="windowSplashScreenAnimationDuration">10000</item>
+    </style>
+
 </resources>

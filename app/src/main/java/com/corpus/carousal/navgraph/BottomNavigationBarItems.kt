@@ -91,16 +91,6 @@ fun BottomNavigationBar(
                         }
                     }
                 },
-//                colors = NavigationDrawerItemDefaults.colors(
-//                    unselectedBadgeColor = Color.White,
-//                    unselectedTextColor = Color.Green,
-//                    selectedBadgeColor = Color.Black,
-//                    selectedTextColor = Color.Red,
-//                    unselectedIconColor = Color.DarkGray,
-//                    selectedIconColor = Color.Black,
-//                    selectedContainerColor = Color.Magenta,
-//                    unselectedContainerColor = Color.Blue
-//                ),
                 colors = NavigationBarItemColors(
                     unselectedIconColor = PurpleGrey40,
                     unselectedTextColor = PurpleGrey40,
@@ -111,7 +101,6 @@ fun BottomNavigationBar(
                     disabledTextColor = PurpleGrey40
                 )
             )
-            //  Spacer(modifier = Modifier.weight(0.1f))
         }
     }
 }
@@ -125,13 +114,13 @@ data class BottomNavigationBarItems(
 
 var bottomBarItems = listOf(
     BottomNavigationBarItems(
-        title = "home",
+        title = "Home",
         icon = R.drawable.unselectedhome,
         cartCount = 0,
         hasBadgeDot = false
     ),
     BottomNavigationBarItems(
-        title = "profile",
+        title = "About",
         icon = R.drawable.profile,
         cartCount = 0,
         hasBadgeDot = true

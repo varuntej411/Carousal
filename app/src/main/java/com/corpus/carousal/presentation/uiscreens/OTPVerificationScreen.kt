@@ -1,5 +1,6 @@
 package com.corpus.carousal.presentation.uiscreens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,10 +16,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -26,27 +30,33 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.corpus.carousal.data.viewmodel.OTPViewModel
 import com.corpus.carousal.navgraph.RootNavGraph
+import com.corpus.carousal.navgraph.Screens
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun OTPVerificationScreen(
-    navController: NavHostController,
-    viewModel: OTPViewModel = viewModel()
+    navController: NavHostController
 ) {
+    val viewModel: OTPViewModel = hiltViewModel()
     val otpCode = viewModel.otpCode
     val isVerified = viewModel.isVerified
     val errorMessage = viewModel.errorMessage
 
     val focusRequesters = List(6) { FocusRequester() }
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp),
+            .background(color = Color.White),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -88,13 +98,23 @@ fun OTPVerificationScreen(
 
         // Error or Success Message
         if (errorMessage.value.isNotEmpty()) {
+            viewModel.saveUserLoggedIn(userLoggedIn = isVerified.value)
             Text(text = errorMessage.value, color = MaterialTheme.colorScheme.error)
         }
 
         if (isVerified.value) {
             Text(text = "OTP Verified Successfully!", color = MaterialTheme.colorScheme.primary)
-            navController.popBackStack()
-            navController.navigate(RootNavGraph.HOME_GRAPH)
+            viewModel.saveUserLoggedIn(userLoggedIn = isVerified.value)
+            LaunchedEffect(key1 = isVerified.value) {
+                    delay(2000L)
+                    coroutineScope.launch {
+                        navController.navigate(RootNavGraph.HOME_GRAPH){
+                            popUpTo(RootNavGraph.AUTH_GRAPH){
+                                inclusive = true
+                            }
+                        }
+                    }
+            }
         }
     }
 }

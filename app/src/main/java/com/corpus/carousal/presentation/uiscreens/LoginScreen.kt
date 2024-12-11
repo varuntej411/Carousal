@@ -3,6 +3,7 @@ package com.corpus.carousal.presentation.uiscreens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,13 +24,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,16 +38,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.corpus.carousal.R
+import com.corpus.carousal.data.viewmodel.LoginViewModel
+import com.corpus.carousal.navgraph.Screens
 
 @Composable
-fun LoginScreen(navController: NavHostController, onLoginClicked: (String) -> Unit) {
+fun LoginScreen(navController: NavHostController) {
 
-    var mobileNumber by remember {
-        mutableStateOf("")
-    }
+    val viewModel: LoginViewModel = hiltViewModel()
+
+    val phoneNumber by viewModel.phoneNumber
+    val isValid by viewModel.isValid
 
     Surface {
         Card(
@@ -100,8 +103,8 @@ fun LoginScreen(navController: NavHostController, onLoginClicked: (String) -> Un
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(75.dp),
-                        value = mobileNumber,
-                        onValueChange = { mobileNumber = it },
+                        value = phoneNumber,
+                        onValueChange = { viewModel.onPhoneNumberChanged(it)},
                         label = {
                             Text(
                                 text = "Enter Mobile no",
@@ -152,19 +155,32 @@ fun LoginScreen(navController: NavHostController, onLoginClicked: (String) -> Un
                                 contentDescription = ""
                             )
                         },
-                        isError = true,
+                        isError = phoneNumber.isNotEmpty() && phoneNumber.length != 10 && !isValid ,
                         singleLine = true
                     )
 
+                    // Show validation error if phone number is invalid
+                    if (phoneNumber.isNotEmpty() && phoneNumber.length != 10 && !isValid) {
+                        Text(
+                            text = "Invalid mobile number",
+                            color = Color.Red,
+                            style = TextStyle(color = Color.Red)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+
                     ElevatedButton(
                         onClick = {
-                            onLoginClicked.invoke(mobileNumber)
+                            if (isValid && phoneNumber.isNotEmpty()) {
+                                navController.navigate(Screens.OTPScreen.route)
+                            }
                         },
                         modifier = Modifier
                             .height(50.dp)
                             .fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(Color.Red),
-                        shape = RoundedCornerShape(10.dp)
+                        shape = RoundedCornerShape(10.dp),
+                        enabled = phoneNumber.isNotEmpty() && phoneNumber.length == 10 && isValid
                     ) {
                         Text(
                             text = "Login",
@@ -188,7 +204,6 @@ fun LoginScreen(navController: NavHostController, onLoginClicked: (String) -> Un
 @Composable
 fun PreviewLoginScreen() {
     LoginScreen(
-        navController = rememberNavController(),
-        onLoginClicked = { _ -> }
+        navController = rememberNavController()
     )
 }

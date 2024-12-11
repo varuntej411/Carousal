@@ -112,6 +112,8 @@ dependencies {
     implementation(libs.accompanist.permission)
     // Viewpager2
     implementation(libs.androidx.viewpager2)
+    //splashscreen
+    implementation(libs.androidx.splash.screen)
 
 
     testImplementation(libs.junit)

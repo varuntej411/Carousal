@@ -7,7 +7,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -21,7 +20,6 @@ import com.corpus.carousal.navgraph.HomeNavGraph
 import com.corpus.carousal.navgraph.Screens
 import com.corpus.carousal.navgraph.bottomBarItems
 import com.corpus.carousal.presentation.components.CustomToolbar
-import okhttp3.Route
 
 @Composable
 fun MainHomeNavigationScreen(
@@ -33,10 +31,6 @@ fun MainHomeNavigationScreen(
 
     var selectedItem by rememberSaveable {
         mutableIntStateOf(0)
-    }
-
-    var darkTheme by rememberSaveable {
-        mutableStateOf(false)
     }
 
     selectedItem = when (backStackState?.destination?.route) {
@@ -54,7 +48,7 @@ fun MainHomeNavigationScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.onBackground,
         topBar = {
             CustomToolbar()
         },
